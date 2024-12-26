@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:15
+    ports:
+      - 55432:5432
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=plausible
+      - POSTGRES_USER=plausible
+      - POSTGRES_DB=plausible_db
