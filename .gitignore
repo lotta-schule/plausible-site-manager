@@ -22,6 +22,7 @@ erl_crash.dump
 # Temporary files, for example, from tests.
 /tmp/
 
+/data/
+
 # Ignore package tarball (built via "mix hex.build").
 plausible_site_manager-*.tar
-
