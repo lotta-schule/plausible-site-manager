@@ -1,0 +1,36 @@
+---
+name: 'CI'
+on:
+  push: {}
+
+env:
+  GITHUB_ACTIONS: true
+
+jobs:
+  lint:
+    name: Lint Code
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup main branch for reference
+        if: ${{ github.ref_name != 'main' }}
+        run: git branch --track main origin/main
+
+      - name: Setup the BEAM and Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          otp-version: '27'
+          elixir-version: '1.17.0'
+
+      - name: Install dependencies
+        run: mix deps.get
+
+      - name: Check credo
+        run: mix credo --strict
+
+      - name: Check formatting
+        run: mix format --check-formatted
