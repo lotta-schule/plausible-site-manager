@@ -61,6 +61,6 @@ USER nobody
 
 ENV HOME=/app
 
-ENTRYPOINT ["bin/plausible_site_manager"]
+ENTRYPOINT ["./bin/sh", "-c"]
 
-CMD ["start"]
+CMD ["bin/server"]
