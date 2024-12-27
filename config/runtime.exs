@@ -36,7 +36,10 @@ if config_env() == :prod do
     path: path
   } = URI.parse(database_url)
 
-  [username, password] = String.split(userinfo, ":", parts: 2)
+  [username, password] =
+    userinfo
+    |> String.split(":", parts: 2)
+    |> Enum.map(&URI.decode/1)
 
   config :plausible_site_manager, :repo_opts,
     # ssl: true,
