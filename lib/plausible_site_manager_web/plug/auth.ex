@@ -7,8 +7,8 @@ defmodule PlausibleSiteManagerWeb.Plug.Auth do
 
   def call(conn, _opts) do
     with {:ok, token} <- get_bearer_token(conn),
-         {:ok, user_id} <- IO.inspect(verify_token(token), label: "verify_token"),
-         {:ok, user} <- IO.inspect(fetch_user(user_id), label: "fetch_user") do
+         {:ok, user_id} <- verify_token(token),
+         {:ok, user} <- fetch_user(user_id) do
       conn
       |> assign(:user, user)
     else
@@ -19,7 +19,7 @@ defmodule PlausibleSiteManagerWeb.Plug.Auth do
   end
 
   defp get_bearer_token(conn) do
-    case IO.inspect(get_req_header(conn, "authorization")) do
+    case get_req_header(conn, "authorization") do
       ["Bearer " <> token] -> {:ok, token}
       _ -> :error
     end
@@ -27,11 +27,9 @@ defmodule PlausibleSiteManagerWeb.Plug.Auth do
 
   defp verify_token(token) do
     hash =
-      :crypto.hash(:sha256, IO.inspect([secret_key_base(), token]))
+      :crypto.hash(:sha256, [secret_key_base(), token])
       |> Base.encode16()
       |> String.downcase()
-
-    IO.inspect(hash, label: "hash")
 
     case DB.scalar!("SELECT user_id FROM api_keys WHERE key_hash = $1", [hash]) do
       nil -> :error

@@ -7,11 +7,8 @@ defmodule PlausibleSiteManagerWeb.SiteController do
 
   def create(%{assigns: %{user: user}} = conn, %{"domain" => domain, "timezone" => timezone}) do
     with {:ok, site} <- Sites.create(user, domain, timezone) do
-      IO.inspect(site)
-
       conn
       |> put_status(:created)
-      |> put_resp_header("location", ~p"/api/sites/#{domain}")
       |> json(site)
     end
   end

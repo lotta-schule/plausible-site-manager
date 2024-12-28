@@ -6,7 +6,7 @@ defmodule DB do
       def child_spec(opts) do
         %{
           id: __MODULE__,
-          start: IO.inspect({__MODULE__, :start_link, [opts]}, label: "Starting DB")
+          start: {__MODULE__, :start_link, [opts]}
         }
       end
 

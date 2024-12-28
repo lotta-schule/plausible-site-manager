@@ -1,18 +1,28 @@
 # PlausibleSiteManager
 
-To start your Phoenix server:
+This is a simple site manager for Plausible Analytics.
+As of v2.1, Plausible does not support Site APIs for Community Edition anymore.
 
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+This is a very very basic tool, for now it only supports adding and removing sites,
+fulfilling our own basic needs.
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+## Features
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+- Add a site
+- Remove a site
 
-## Learn more
+## Usage
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+The API endpoints are designed to be the same as the Plausible API.
+
+### Add a site
+
+```bash
+# Create a site
+# POST /api/v1/sites
+$ curl -XPOST -H "Content-Type: application/json" -d '{"timezone": "Europe/Berlin", "domain": "domain.com"}' 'http://localhost:4000/api/v1/sites'
+
+# Delete a site
+# DELETE /api/v1/sites/:domain
+$ curl -XDELETE 'http://localhost:4000/api/v1/sites/domain.com'
+```
