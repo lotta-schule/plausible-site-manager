@@ -61,6 +61,6 @@ USER nobody
 
 ENV HOME=/app
 
-ENTRYPOINT ["./bin/sh", "-c"]
+ENTRYPOINT ["/bin/sh", "-c"]
 
 CMD ["bin/server"]
